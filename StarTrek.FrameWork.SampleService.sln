@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTrek.FrameWork.SampleService.Api", "StarTrek.FrameWork.SampleService.Api\StarTrek.FrameWork.SampleService.Api.csproj", "{08F5F681-8813-4DC3-B5B8-F13590AFFEB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTrek.FrameWork.SampleService.Core", "StarTrek.FrameWork.SampleService.Core\StarTrek.FrameWork.SampleService.Core.csproj", "{F413FFF8-66E4-4FD2-AD1A-99BEA263C796}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTrek.FrameWork.SampleService.DataAccess", "StarTrek.FrameWork.SampleService.DataAccess\StarTrek.FrameWork.SampleService.DataAccess.csproj", "{563E6DB8-337D-49EB-A1A1-AE1305EC7F1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTrek.FrameWork.SampleService.Models", "StarTrek.FrameWork.SampleService.Models\StarTrek.FrameWork.SampleService.Models.csproj", "{9C56FAE0-581F-4B54-AEEE-0D588539D20E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceClients", "ServiceClients", "{98FB4BD4-7D21-4BC3-B717-22C1FEAA0975}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTrek.FrameWork.CustomerServiceClient", "StarTrek.FrameWork.CustomerServiceClient\StarTrek.FrameWork.CustomerServiceClient.csproj", "{6A6D1D79-91E4-4FE4-83E2-721CC64486FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{08F5F681-8813-4DC3-B5B8-F13590AFFEB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08F5F681-8813-4DC3-B5B8-F13590AFFEB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08F5F681-8813-4DC3-B5B8-F13590AFFEB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08F5F681-8813-4DC3-B5B8-F13590AFFEB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F413FFF8-66E4-4FD2-AD1A-99BEA263C796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F413FFF8-66E4-4FD2-AD1A-99BEA263C796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F413FFF8-66E4-4FD2-AD1A-99BEA263C796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F413FFF8-66E4-4FD2-AD1A-99BEA263C796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{563E6DB8-337D-49EB-A1A1-AE1305EC7F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{563E6DB8-337D-49EB-A1A1-AE1305EC7F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{563E6DB8-337D-49EB-A1A1-AE1305EC7F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{563E6DB8-337D-49EB-A1A1-AE1305EC7F1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C56FAE0-581F-4B54-AEEE-0D588539D20E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C56FAE0-581F-4B54-AEEE-0D588539D20E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C56FAE0-581F-4B54-AEEE-0D588539D20E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C56FAE0-581F-4B54-AEEE-0D588539D20E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A6D1D79-91E4-4FE4-83E2-721CC64486FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A6D1D79-91E4-4FE4-83E2-721CC64486FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A6D1D79-91E4-4FE4-83E2-721CC64486FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A6D1D79-91E4-4FE4-83E2-721CC64486FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6A6D1D79-91E4-4FE4-83E2-721CC64486FE} = {98FB4BD4-7D21-4BC3-B717-22C1FEAA0975}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03F6515A-5C85-40B5-A704-695D5F79BC7C}
+	EndGlobalSection
+EndGlobal
