@@ -4,7 +4,7 @@ using StarTrek.FrameWork.SampleService.Models;
 
 namespace StarTrek.FrameWork.SampleService.DataAccess
 {
-    class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         public async Task<IEnumerable<OrderInformation>> GetOrderInformation(string id)
         {

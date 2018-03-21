@@ -3,17 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTrek.FrameWork.SampleService.Api", "StarTrek.FrameWork.SampleService.Api\StarTrek.FrameWork.SampleService.Api.csproj", "{08F5F681-8813-4DC3-B5B8-F13590AFFEB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarTrek.FrameWork.SampleService.Api", "StarTrek.FrameWork.SampleService.Api\StarTrek.FrameWork.SampleService.Api.csproj", "{08F5F681-8813-4DC3-B5B8-F13590AFFEB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTrek.FrameWork.SampleService.Core", "StarTrek.FrameWork.SampleService.Core\StarTrek.FrameWork.SampleService.Core.csproj", "{F413FFF8-66E4-4FD2-AD1A-99BEA263C796}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarTrek.FrameWork.SampleService.Core", "StarTrek.FrameWork.SampleService.Core\StarTrek.FrameWork.SampleService.Core.csproj", "{F413FFF8-66E4-4FD2-AD1A-99BEA263C796}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTrek.FrameWork.SampleService.DataAccess", "StarTrek.FrameWork.SampleService.DataAccess\StarTrek.FrameWork.SampleService.DataAccess.csproj", "{563E6DB8-337D-49EB-A1A1-AE1305EC7F1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarTrek.FrameWork.SampleService.DataAccess", "StarTrek.FrameWork.SampleService.DataAccess\StarTrek.FrameWork.SampleService.DataAccess.csproj", "{563E6DB8-337D-49EB-A1A1-AE1305EC7F1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTrek.FrameWork.SampleService.Models", "StarTrek.FrameWork.SampleService.Models\StarTrek.FrameWork.SampleService.Models.csproj", "{9C56FAE0-581F-4B54-AEEE-0D588539D20E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarTrek.FrameWork.SampleService.Models", "StarTrek.FrameWork.SampleService.Models\StarTrek.FrameWork.SampleService.Models.csproj", "{9C56FAE0-581F-4B54-AEEE-0D588539D20E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceClients", "ServiceClients", "{98FB4BD4-7D21-4BC3-B717-22C1FEAA0975}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarTrek.FrameWork.CustomerServiceClient", "StarTrek.FrameWork.CustomerServiceClient\StarTrek.FrameWork.CustomerServiceClient.csproj", "{6A6D1D79-91E4-4FE4-83E2-721CC64486FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarTrek.FrameWork.CustomerServiceClient", "StarTrek.FrameWork.CustomerServiceClient\StarTrek.FrameWork.CustomerServiceClient.csproj", "{6A6D1D79-91E4-4FE4-83E2-721CC64486FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{221D3CE7-68B9-4A1E-A4D1-F8007FAEA07A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{B581EAD7-E0CB-4A24-8838-0AFCE29FDF92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpecTests", "SpecTests", "{2E505452-6D6E-492D-A40D-E4E49DD91C7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +53,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6A6D1D79-91E4-4FE4-83E2-721CC64486FE} = {98FB4BD4-7D21-4BC3-B717-22C1FEAA0975}
+		{B581EAD7-E0CB-4A24-8838-0AFCE29FDF92} = {221D3CE7-68B9-4A1E-A4D1-F8007FAEA07A}
+		{2E505452-6D6E-492D-A40D-E4E49DD91C7F} = {221D3CE7-68B9-4A1E-A4D1-F8007FAEA07A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03F6515A-5C85-40B5-A704-695D5F79BC7C}

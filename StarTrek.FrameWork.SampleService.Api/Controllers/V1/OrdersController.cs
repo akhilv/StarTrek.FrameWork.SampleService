@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StarTrek.FrameWork.SampleService.Core;
 using StarTrek.FrameWork.SampleService.Models;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
 {
-    [Route("[orders]")]
+    [Route("[controller]")]
     public class OrdersController : Controller
     {
         private readonly IOrderService _orderService;
@@ -19,18 +19,22 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
         {
             _orderService = orderService;
         }
-        
+
+
+        public OrdersController(){}
+
         [HttpGet]
-        public async Task<IEnumerable<OrderInformation>> GetOrders()
+        public async Task<IActionResult> GetOrders()
         {
-            return await _orderService.GetOrderInformation(String.Empty);
+            var responseTask = await _orderService.GetOrderInformation(String.Empty);
+            return new ObjectResult(null) { StatusCode = (int)HttpStatusCode.OK };
         }
 
         [HttpGet("{id}")]
-        public async Task<OrderInformation> GetOrdersById(int id)
+        public async Task<IActionResult> GetOrdersById(string id)
         {
-            var responseTask = await _orderService.GetOrderInformation(id.ToString());
-            return responseTask.First();
+            var responseTask = await _orderService.GetOrderInformation(id);
+            return new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.OK };
         }
 
         //// POST api/<controller>
