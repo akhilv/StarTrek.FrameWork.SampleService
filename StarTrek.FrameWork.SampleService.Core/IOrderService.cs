@@ -8,5 +8,12 @@ namespace StarTrek.FrameWork.SampleService.Core
     public interface IOrderService
     {
         Task<IEnumerable<OrderInformation>> GetOrderInformation(string id);
+
+        Task<OrderInformation> CreateOrder(CreateOrderRequest createOrderRequest);
+
+        Task<OrderInformation> UpdateOrder(UpdateOrderRequest updateOrderRequest);
+
+        Task<bool> DeleteOrder(string id);
     }
-    }
+}
+

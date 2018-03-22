@@ -21,5 +21,20 @@ namespace StarTrek.FrameWork.SampleService.Core
         {
             throw new NotImplementedException();
         }
+
+        public Task<OrderInformation> CreateOrder(CreateOrderRequest createOrderRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<OrderInformation> UpdateOrder(UpdateOrderRequest updateOrderRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteOrder(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

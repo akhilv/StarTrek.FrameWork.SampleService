@@ -20,39 +20,85 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
             _orderService = orderService;
         }
 
-
-        public OrdersController(){}
-
         [HttpGet]
         public async Task<IActionResult> GetOrders()
         {
             var responseTask = await _orderService.GetOrderInformation(String.Empty);
-            return new ObjectResult(null) { StatusCode = (int)HttpStatusCode.OK };
+            return new ObjectResult(responseTask){StatusCode = (int)HttpStatusCode.OK };
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrdersById(string id)
         {
             var responseTask = await _orderService.GetOrderInformation(id);
+
+            //Content negotiation is implemented by ObjectResult hence using it
             return new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.OK };
         }
 
-        //// POST api/<controller>
-        //[HttpPost]
-        //public void Post([FromBody]string value)
-        //{
-        //}
+        //// POST sample-api/<controller>
+        [HttpPost]
+        public async Task<IActionResult> CreateOrder(CreateOrderRequest createOrderRequest)
+        {
+            ObjectResult response;
 
-        //// PUT api/<controller>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
 
-        //// DELETE api/<controller>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+                var responseTask = await _orderService.CreateOrder(createOrderRequest);
+
+                response = new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.Created };
+            }
+            catch (Exception e)
+            {
+                //TODO: Need to handle it properly
+                response = new ObjectResult(new ErrorResponse{Message=e.Message}) { StatusCode = (int)HttpStatusCode.InternalServerError};
+            }
+            return response;
+        }
+
+        //// PUT sample-api/<controller>/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateOrder(string id, UpdateOrderRequest updateOrderRequest)
+        {
+            ObjectResult response;
+
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var responseTask = await _orderService.UpdateOrder(updateOrderRequest);
+
+                response = new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.OK };
+            }
+            catch (Exception e)
+            {
+                //TODO: Need to handle it properly
+                response = new ObjectResult(new ErrorResponse { Message = e.Message }) { StatusCode = (int)HttpStatusCode.InternalServerError };
+            }
+            return response;
+        }
+
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            ObjectResult response;
+
+            try
+            {
+                var responseTask = await _orderService.DeleteOrder(id);
+                response = new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.OK};
+            }
+            catch (Exception e)
+            {
+                //TODO: Need to handle it properly
+                response = new ObjectResult(new ErrorResponse { Message = e.Message }) { StatusCode = (int)HttpStatusCode.InternalServerError };
+            }
+            return response;
+        }
     }
 }
