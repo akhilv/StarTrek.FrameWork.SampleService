@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using StarTrek.FrameWork.SampleService.Api.Conventions;
 using StarTrek.FrameWork.SampleService.Api.DI;
+using StarTrek.FrameWork.SampleService.Api.Filters;
 using StarTrek.FrameWork.SampleService.Api.MiddleWare;
 
 namespace StarTrek.FrameWork.SampleService.Api
@@ -44,7 +45,7 @@ namespace StarTrek.FrameWork.SampleService.Api
             services.Configure<MvcOptions>(opt =>
             {
                opt.Conventions.Add(new FromBodyParameterModelConvention());
-                //opt.Filters.Add(typeof(GlobalExceptionFilter)); 
+               opt.Filters.Add(typeof(ValidateModelAttribute)); 
             });
 
             //Configure the custom configurations

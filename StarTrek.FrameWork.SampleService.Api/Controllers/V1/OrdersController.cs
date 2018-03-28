@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
 using StarTrek.FrameWork.SampleService.Core;
 using StarTrek.FrameWork.SampleService.Models;
@@ -24,17 +25,39 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
         [HttpGet]
         public async Task<IActionResult> GetOrders()
         {
-            var responseTask = await _orderService.GetOrderInformation(String.Empty);
-            return new ObjectResult(responseTask){StatusCode = (int)HttpStatusCode.OK };
+            ObjectResult response;
+            try
+            {
+
+                var responseTask = await _orderService.GetOrderInformation(String.Empty);
+                response =  new ObjectResult(responseTask) {StatusCode = (int) HttpStatusCode.OK};
+            }
+            catch (Exception e)
+            {
+                //TODO: Need to handle it properly
+                response = new ObjectResult(new ErrorResponse { Message = e.Message }) { StatusCode = (int)HttpStatusCode.InternalServerError };
+            }
+
+            return response;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrdersById(string id)
         {
-            var responseTask = await _orderService.GetOrderInformation(id);
+            ObjectResult response;
+            try
+            {
+                var responseTask = await _orderService.GetOrderInformation(id);
 
-            //Content negotiation is implemented by ObjectResult hence using it
-            return new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.OK };
+                //Content negotiation is implemented by ObjectResult hence using it
+                response = new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.OK };
+            }
+            catch (Exception e)
+            {
+                //TODO: Need to handle it properly
+                response = new ObjectResult(new ErrorResponse { Message = e.Message }) { StatusCode = (int)HttpStatusCode.InternalServerError };
+            }
+            return response;
         }
 
         //// POST sample-api/<controller>
@@ -42,12 +65,8 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
         public async Task<IActionResult> CreateOrder(CreateOrderRequest createOrderRequest)
         {
             ObjectResult response;
-
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
                 var responseTask = await _orderService.CreateOrder(createOrderRequest);
 
                 response = new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.Created };
@@ -65,12 +84,8 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
         public async Task<IActionResult> UpdateOrder(string id, UpdateOrderRequest updateOrderRequest)
         {
             ObjectResult response;
-
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
                 var responseTask = await _orderService.UpdateOrder(updateOrderRequest);
 
                 response = new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.OK };
@@ -88,7 +103,6 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
         public async Task<IActionResult> Delete(string id)
         {
             ObjectResult response;
-
             try
             {
                 var responseTask = await _orderService.DeleteOrder(id);
