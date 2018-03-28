@@ -9,15 +9,35 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using StarTrek.FrameWork.SampleService.Api.Conventions;
 using StarTrek.FrameWork.SampleService.Api.DI;
 using StarTrek.FrameWork.SampleService.Api.MiddleWare;
 
 namespace StarTrek.FrameWork.SampleService.Api
 {
+    public interface ISqlConfiguration
+    {
+        string ConnectionString { get; set; }
+
+        int ConnectionTimeOut { get; set; }
+    }
+    public class SqlConfiguration : ISqlConfiguration
+    {
+        public string ConnectionString { get; set; }
+        public int ConnectionTimeOut { get; set; }
+    }
+
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -27,10 +47,21 @@ namespace StarTrek.FrameWork.SampleService.Api
                 //opt.Filters.Add(typeof(GlobalExceptionFilter)); 
             });
 
+            //Configure the custom configurations
+            services.Configure<SqlConfiguration>(_configuration.GetSection("SQLConfiguration"));
+
+
+            //USING DRYIOC
             var container = new Container();
             var newContainer = container.WithDependencyInjectionAdapter(services);
-
-            var provider =  newContainer.ConfigureServiceProvider<CompositionRoot>();
+            //For custom configuration DI, 
+            //Using inbuilt container
+            //services.AddScoped(typeof(ISqlOptionConfiguration),  sp => sp.GetService<IOptionsSnapshot<SqlOptionConfiguration>>().Value);
+            //Using DRYIOC 
+            newContainer.RegisterDelegate(typeof(ISqlConfiguration), rs => rs.Resolve<IOptionsSnapshot<SqlConfiguration>>().Value, Reuse.Scoped);
+            
+            //Rest of the DI
+            var provider = newContainer.ConfigureServiceProvider<CompositionRoot>();
 
             //Verify all DI setup is correct
             //TODO : This has stopped working in this version
@@ -39,12 +70,12 @@ namespace StarTrek.FrameWork.SampleService.Api
             //{
             //    throw new InvalidOperationException("Invalid DI Setup");
             //}
+            //Configure ServiceLocator 
             ServiceLocator.SetLocatorProvider(() => new DryIocServiceLocator((Container)newContainer));
             return provider;
-
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
             //Example Middleware

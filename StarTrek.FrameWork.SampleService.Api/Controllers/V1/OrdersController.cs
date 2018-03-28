@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using StarTrek.FrameWork.SampleService.Core;
 using StarTrek.FrameWork.SampleService.Models;
 

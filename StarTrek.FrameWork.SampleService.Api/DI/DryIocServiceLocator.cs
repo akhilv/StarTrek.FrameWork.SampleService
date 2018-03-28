@@ -8,7 +8,7 @@ using DryIoc;
 namespace StarTrek.FrameWork.SampleService.Api.DI
 {
     /// <summary>
-    /// Dry IOC ServiceLocator - Note that the default one on web is not compatible with .NET Core 2.0
+    /// Dry IOC ServiceLocator - Default one on web is not compatible with .NET Core 2.0
     /// </summary>
     public class DryIocServiceLocator : ServiceLocatorImplBase
     {

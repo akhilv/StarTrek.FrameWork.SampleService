@@ -7,16 +7,28 @@ namespace StarTrek.FrameWork.SampleService.Api.DI
 {
     public class CompositionRoot
     {
-        public CompositionRoot(IRegistrator container)
+        public CompositionRoot(IRegistrator registrator)
         {
-            container.Register<IOrderService, OrderService>();
-            container.Register<IOrderRepository, OrderRepository>();
-            container.Register<ICustomerService, CustomerService>();
+            registrator.Register<IOrderService, OrderService>();
+            registrator.Register<ICustomerService, CustomerService>();
 
+            //For components
+            registrator.RegisterRepository();
+
+            //For assembly scan
             //container.Register<ILogger, Serilog>() ;
             //    //var assemblies = new[] { typeof(ExportedService).GetAssembly() };
             //    //container.RegisterMany(assemblies);
         }
 
+    }
+
+    internal static class RegisterRepositoryExtension
+    {
+        public static void RegisterRepository(this IRegistrator registrator)
+        {
+            registrator.Register<IOrderRepository, OrderRepository>(Reuse.Singleton);
+
+        }
     }
 }
