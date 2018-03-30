@@ -81,7 +81,8 @@ namespace StarTrek.FrameWork.SampleService.Api
         {
             //Example Middleware
             app.UseMiddleware<RequestCultureMiddleware>();
-            
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
             //Sets path base
             app.UsePathBase("/sample-api/v1");
 
@@ -93,7 +94,7 @@ namespace StarTrek.FrameWork.SampleService.Api
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
             }
 
             //Configure default route

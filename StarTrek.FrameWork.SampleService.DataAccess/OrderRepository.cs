@@ -10,7 +10,6 @@ namespace StarTrek.FrameWork.SampleService.DataAccess
         {
             var res = new List<OrderInformation>();
 
-
             //Implement dapper layer to retrieve the order information 
             return await Task.FromResult(res);
         }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
 using StarTrek.FrameWork.SampleService.Core;
 using StarTrek.FrameWork.SampleService.Models;
+using StarTrek.FrameWork.SampleService.Models.Exceptions;
 
 
 namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
@@ -28,14 +29,12 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
             ObjectResult response;
             try
             {
-
                 var responseTask = await _orderService.GetOrderInformation(String.Empty);
                 response =  new ObjectResult(responseTask) {StatusCode = (int) HttpStatusCode.OK};
             }
-            catch (Exception e)
+            catch (HttpStatusCodeException e)
             {
-                //TODO: Need to handle it properly
-                response = new ObjectResult(new ErrorResponse { Message = e.Message }) { StatusCode = (int)HttpStatusCode.InternalServerError };
+                response = new ObjectResult(e.Error){ StatusCode = (int)HttpStatusCode.InternalServerError};
             }
 
             return response;
@@ -52,10 +51,9 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
                 //Content negotiation is implemented by ObjectResult hence using it
                 response = new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.OK };
             }
-            catch (Exception e)
+            catch (HttpStatusCodeException e)
             {
-                //TODO: Need to handle it properly
-                response = new ObjectResult(new ErrorResponse { Message = e.Message }) { StatusCode = (int)HttpStatusCode.InternalServerError };
+                response = new ObjectResult(e.Error) { StatusCode = (int)HttpStatusCode.InternalServerError };
             }
             return response;
         }
@@ -71,10 +69,9 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
 
                 response = new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.Created };
             }
-            catch (Exception e)
+            catch (HttpStatusCodeException e)
             {
-                //TODO: Need to handle it properly
-                response = new ObjectResult(new ErrorResponse{Message=e.Message}) { StatusCode = (int)HttpStatusCode.InternalServerError};
+                response = new ObjectResult(e.Error) { StatusCode = (int)HttpStatusCode.InternalServerError };
             }
             return response;
         }
@@ -90,10 +87,9 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
 
                 response = new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.OK };
             }
-            catch (Exception e)
+            catch (HttpStatusCodeException e)
             {
-                //TODO: Need to handle it properly
-                response = new ObjectResult(new ErrorResponse { Message = e.Message }) { StatusCode = (int)HttpStatusCode.InternalServerError };
+                response = new ObjectResult(e.Error) { StatusCode = (int)HttpStatusCode.InternalServerError };
             }
             return response;
         }
@@ -108,10 +104,9 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
                 var responseTask = await _orderService.DeleteOrder(id);
                 response = new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.OK};
             }
-            catch (Exception e)
+            catch (HttpStatusCodeException e)
             {
-                //TODO: Need to handle it properly
-                response = new ObjectResult(new ErrorResponse { Message = e.Message }) { StatusCode = (int)HttpStatusCode.InternalServerError };
+                response = new ObjectResult(e.Error) { StatusCode = (int)HttpStatusCode.InternalServerError };
             }
             return response;
         }

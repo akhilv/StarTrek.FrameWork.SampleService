@@ -7,6 +7,7 @@ namespace StarTrek.FrameWork.SampleService.Models
 {
    public class CreateOrderRequest
     {
+        [Required]
         public string CustomerId { get; set; }
 
         public string OrderRef { get; set; }
