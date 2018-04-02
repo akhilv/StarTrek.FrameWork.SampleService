@@ -34,8 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{AB3B96
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Procs", "Procs", "{342F1974-4DEB-4581-BBCD-2C754BD2792F}"
 	ProjectSection(SolutionItems) = preProject
-		CreateSampleOrder.sql = CreateSampleOrder.sql
-		GetSampleOrder.sql = GetSampleOrder.sql
+		SQL\CreateSampleOrder.sql = SQL\CreateSampleOrder.sql
+		SQL\GetSampleOrder.sql = SQL\GetSampleOrder.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", "{89387F98-0C61-435B-8B31-EEE95937599B}"
