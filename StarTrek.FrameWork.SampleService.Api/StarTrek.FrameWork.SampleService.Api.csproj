@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommonServiceLocator" Version="2.0.3" />
     <PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="2.0.0-preview-03" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
