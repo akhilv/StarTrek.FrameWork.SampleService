@@ -4,7 +4,7 @@ namespace StarTrek.FrameWork.SampleService.Models.Exceptions
     {
         Unspecified = 0,
         ModelBindingException= 500,
-        UnhandledException = 1000,
-        NotImplementedException = 9000,
+        SQLException = 1000,
+        UnhandledException = 9000
     }
 }

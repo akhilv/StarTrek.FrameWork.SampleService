@@ -25,16 +25,10 @@ namespace SampleService.Api.SpecTests
 
         public override IServiceProvider ConfigureDi(IServiceCollection services)
         {
-            //var mockobj = new Mock<IOrderService>();
-            //mockobj.Setup(os => os.CreateOrder(It.IsAny<CreateOrderRequest>())).ThrowsAsync(new InvalidOperationException());
-
             var container = new Container();
             var newContainer = container.WithDependencyInjectionAdapter(services);
-            newContainer.RegisterDelegate(typeof(ISqlConfiguration), rs => rs.Resolve<IOptionsSnapshot<SqlConfiguration>>().Value, Reuse.Scoped);
+            newContainer.RegisterDelegate(typeof(ISqlConfiguration), rs => rs.Resolve<IOptionsSnapshot<SqlConfiguration>>().Value, Reuse.Singleton);
             var provider = newContainer.ConfigureServiceProvider<CompositionRootStub>();
-
-            //newContainer.UseInstance(typeof(IOrderService), mockobj.Object);
-
             return provider;
         }
     }

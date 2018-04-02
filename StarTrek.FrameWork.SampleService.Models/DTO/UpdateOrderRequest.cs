@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StarTrek.FrameWork.SampleService.Models
+namespace StarTrek.FrameWork.SampleService.Models.DTO
 {
     public class UpdateOrderRequest
     {

@@ -10,6 +10,7 @@ using NUnit.Framework;
 using StarTrek.FrameWork.SampleService.Api.Controllers.V1;
 using StarTrek.FrameWork.SampleService.Core;
 using StarTrek.FrameWork.SampleService.Models;
+using StarTrek.FrameWork.SampleService.Models.DTO;
 using StarTrek.FrameWork.SampleService.Models.Exceptions;
 
 namespace SampleService.Api.UnitTests.Controllers
@@ -29,10 +30,10 @@ namespace SampleService.Api.UnitTests.Controllers
         public async Task Get_Orders_For_Valid_Id(string id)
         {
             //Arrange
-            var resDateTime = DateTime.Now;
+            var resDateTime = DateTime.Now.ToUniversalTime();
             var expectedResponse = new List<OrderInformation>
             {
-                new OrderInformation {OrderId = 1, OrderRef = "ORDERREF", OrderCreatedDate = resDateTime}
+                new OrderInformation {OrderId = 1, OrderRef = "ORDERREF", CreatedDateTime = resDateTime}
             };
             _orderServiceMock.Setup(os => os.GetOrderInformation(id)).ReturnsAsync(expectedResponse);
             var sut = new OrdersController(_orderServiceMock.Object);
@@ -52,13 +53,14 @@ namespace SampleService.Api.UnitTests.Controllers
             //Arrange request
             var rq = new CreateOrderRequest
             {
-                CustomerId = "CustomerId",
-                OrderId = "OrderId"
+                CustomerId = "CustomerId"
+                
             };
 
             //response
-            var resDateTime = DateTime.Now;
-            var expectedResponse =new OrderInformation {OrderId = 1, OrderRef = "ORDERREF", OrderCreatedDate = resDateTime};
+            var resDateTime = DateTime.Now.ToUniversalTime();
+            var expectedResponse =
+                new OrderInformation {OrderId = 1, OrderRef = "ORDERREF", CreatedDateTime = resDateTime};
 
             _orderServiceMock.Setup(os => os.CreateOrder(rq)).ReturnsAsync(expectedResponse);
            var sut = new OrdersController(_orderServiceMock.Object);
@@ -79,8 +81,8 @@ namespace SampleService.Api.UnitTests.Controllers
             //Arrange request
             var rq = new CreateOrderRequest
             {
-                CustomerId = "CustomerId",
-                OrderId = ""
+                CustomerId = "CustomerId"
+                
             };
 
             //response

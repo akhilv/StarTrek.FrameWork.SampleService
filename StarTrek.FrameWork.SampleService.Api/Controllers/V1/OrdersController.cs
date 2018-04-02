@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
 using StarTrek.FrameWork.SampleService.Core;
 using StarTrek.FrameWork.SampleService.Models;
+using StarTrek.FrameWork.SampleService.Models.DTO;
 using StarTrek.FrameWork.SampleService.Models.Exceptions;
 
 

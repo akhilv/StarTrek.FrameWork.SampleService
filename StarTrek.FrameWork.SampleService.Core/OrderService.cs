@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using StarTrek.FrameWork.CustomerServiceClient;
 using StarTrek.FrameWork.SampleService.DataAccess;
 using StarTrek.FrameWork.SampleService.Models;
+using StarTrek.FrameWork.SampleService.Models.DTO;
 using StarTrek.FrameWork.SampleService.Models.Exceptions;
 
 namespace StarTrek.FrameWork.SampleService.Core
@@ -20,57 +22,55 @@ namespace StarTrek.FrameWork.SampleService.Core
             _orderRepository = orderRepository;
             _customerService = customerService;
         }
-        public Task<IEnumerable<OrderInformation>> GetOrderInformation(string id)
+        public async Task<IEnumerable<OrderInformation>> GetOrderInformation(string id)
         {
-            var response = new List<OrderInformation>();
+            IEnumerable<OrderInformation> response = null;
             try
             {
-                response.AddRange(new []{new OrderInformation{OrderRef = id}, new OrderInformation()});
-                if(!string.IsNullOrEmpty(id))
-                    response.RemoveAll(o => o.OrderRef != id);
+                response = await _orderRepository.GetOrderInformation(id);
             }
-            catch (NotImplementedException e) //catch custom exceptions and relay httpstatuscodeexceptions to controller
+            catch (SqlException e) //catch handled exceptions and relay httpstatuscodeexceptions to controller
             {
-               throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.NotImplementedException, e.Message));
+                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.SQLException, e.Message));
             }
-
-            return Task.FromResult(response.AsEnumerable());
+            return response;
         }
 
-        public Task<OrderInformation> CreateOrder(CreateOrderRequest createOrderRequest)
+        public async Task<OrderInformation> CreateOrder(CreateOrderRequest createOrderRequest)
         {
             try
             {
-                return Task.FromResult(new OrderInformation());
-                //throw new NotImplementedException();
-            }
-            catch (NotImplementedException e) //catch custom exceptions and relay httpstatuscodeexceptions to controller
-            {
-                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.NotImplementedException, e.Message));
-            }
-        }
+                createOrderRequest.OrderRef = Guid.NewGuid().ToString();
 
-        public Task<OrderInformation> UpdateOrder(UpdateOrderRequest updateOrderRequest)
-        {
-            try
-            {
-                throw new NotImplementedException();
+                return await _orderRepository.CreateOrder(createOrderRequest);
             }
-            catch (NotImplementedException e) //catch custom exceptions and relay httpstatuscodeexceptions to controller
+            catch (SqlException e) //catch handled exceptions and relay httpstatuscodeexceptions to controller
             {
-                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.NotImplementedException, e.Message));
+                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.SQLException, e.Message));
             }
         }
 
-        public Task<bool> DeleteOrder(string id)
+        public async Task<OrderInformation> UpdateOrder(UpdateOrderRequest updateOrderRequest)
         {
             try
             {
-                throw new NotImplementedException();
+                return await _orderRepository.UpdateOrder(updateOrderRequest);
             }
-            catch (NotImplementedException e) //catch custom exceptions and relay httpstatuscodeexceptions to controller
+            catch (SqlException e) //catch handled exceptions and relay httpstatuscodeexceptions to controller
             {
-                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.NotImplementedException, e.Message));
+                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.SQLException, e.Message));
+            }
+        }
+
+        public async Task<bool> DeleteOrder(string id)
+        {
+            try
+            {
+                return await _orderRepository.DeleteOrder(id);
+            }
+            catch (SqlException e) //catch handled exceptions and relay httpstatuscodeexceptions to controller
+            {
+                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.SQLException, e.Message));
             }
         }
     }

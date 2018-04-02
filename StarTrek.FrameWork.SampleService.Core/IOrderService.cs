@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using StarTrek.FrameWork.SampleService.Models;
+using StarTrek.FrameWork.SampleService.Models.DTO;
 
 namespace StarTrek.FrameWork.SampleService.Core
 {

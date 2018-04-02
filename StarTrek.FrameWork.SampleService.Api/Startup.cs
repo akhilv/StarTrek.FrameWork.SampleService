@@ -16,21 +16,10 @@ using StarTrek.FrameWork.SampleService.Api.Conventions;
 using StarTrek.FrameWork.SampleService.Api.DI;
 using StarTrek.FrameWork.SampleService.Api.Filters;
 using StarTrek.FrameWork.SampleService.Api.MiddleWare;
+using StarTrek.FrameWork.SampleService.DataAccess;
 
 namespace StarTrek.FrameWork.SampleService.Api
 {
-    public interface ISqlConfiguration
-    {
-        string ConnectionString { get; set; }
-
-        int ConnectionTimeOut { get; set; }
-    }
-    public class SqlConfiguration : ISqlConfiguration
-    {
-        public string ConnectionString { get; set; }
-        public int ConnectionTimeOut { get; set; }
-    }
-
     public class Startup
     {
         private readonly IConfiguration _configuration;
@@ -64,7 +53,7 @@ namespace StarTrek.FrameWork.SampleService.Api
             //Using inbuilt container
             //services.AddScoped(typeof(ISqlOptionConfiguration),  sp => sp.GetService<IOptionsSnapshot<SqlOptionConfiguration>>().Value);
             //Using DRYIOC 
-            newContainer.RegisterDelegate(typeof(ISqlConfiguration), rs => rs.Resolve<IOptionsSnapshot<SqlConfiguration>>().Value, Reuse.Scoped);
+            newContainer.RegisterDelegate(typeof(ISqlConfiguration), rs => rs.Resolve<IOptionsSnapshot<SqlConfiguration>>().Value, Reuse.Singleton);
 
             //Rest of the DI
             var provider = newContainer.ConfigureServiceProvider<CompositionRoot>();

@@ -23,7 +23,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleService.Api.UnitTests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpecTests", "SpecTests", "{EF8BB624-67B1-41A4-9222-AF16E15FE7E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleService.Api.SpecTests", "SampleService.Api.SpecTests\SampleService.Api.SpecTests.csproj", "{A2E344D8-2C15-4FC8-B39E-274EB4527092}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleService.Api.SpecTests", "SampleService.Api.SpecTests\SampleService.Api.SpecTests.csproj", "{A2E344D8-2C15-4FC8-B39E-274EB4527092}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{41F97BF6-F32B-4D96-A65F-B0D0CF3F22F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{AB3B9622-61A5-4FC4-8CD4-6ABA5195C193}"
+	ProjectSection(SolutionItems) = preProject
+		SQL\SampleOrder.sql = SQL\SampleOrder.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Procs", "Procs", "{342F1974-4DEB-4581-BBCD-2C754BD2792F}"
+	ProjectSection(SolutionItems) = preProject
+		CreateSampleOrder.sql = CreateSampleOrder.sql
+		GetSampleOrder.sql = GetSampleOrder.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +82,8 @@ Global
 		{35A8967B-A55F-4A1C-A4C5-1B85D438A4C9} = {34BEADBD-9ABE-4099-90F4-2DDA48777200}
 		{EF8BB624-67B1-41A4-9222-AF16E15FE7E6} = {221D3CE7-68B9-4A1E-A4D1-F8007FAEA07A}
 		{A2E344D8-2C15-4FC8-B39E-274EB4527092} = {EF8BB624-67B1-41A4-9222-AF16E15FE7E6}
+		{AB3B9622-61A5-4FC4-8CD4-6ABA5195C193} = {41F97BF6-F32B-4D96-A65F-B0D0CF3F22F4}
+		{342F1974-4DEB-4581-BBCD-2C754BD2792F} = {41F97BF6-F32B-4D96-A65F-B0D0CF3F22F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03F6515A-5C85-40B5-A704-695D5F79BC7C}

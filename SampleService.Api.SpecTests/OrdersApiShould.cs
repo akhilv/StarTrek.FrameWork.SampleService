@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,12 +11,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Owin;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using StarTrek.FrameWork.SampleService.Core;
 using StarTrek.FrameWork.SampleService.Models;
+using StarTrek.FrameWork.SampleService.Models.DTO;
 using StarTrek.FrameWork.SampleService.Models.Exceptions;
 
 namespace SampleService.Api.SpecTests
@@ -26,10 +29,20 @@ namespace SampleService.Api.SpecTests
         private HttpClient _client;
         private const string BaseUrl = "http://localhost/sample-api/v1/orders";
 
+        private readonly IConfigurationRoot _configuration;
+        public OrdersApiShould()
+        {
+            //We want the test to use its own configuration file, hence configure the builder
+            //and ensure the jsonfile properties is set to "Copy if newer"
+            _configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json").Build();
+        }
+
         [OneTimeSetUp]
         public void SetUp()
         {
-            var hostBuilder = new WebHostBuilder().UseStartup<StartUpStub>();
+            var hostBuilder = new WebHostBuilder().UseStartup<StartUpStub>().UseConfiguration(_configuration);
             _client = CreateServer(hostBuilder);
             //TODO:Need to create a test data in Repositories
         }
@@ -48,11 +61,19 @@ namespace SampleService.Api.SpecTests
         }
 
 
-        [TestCase("testId")]
-        public async Task GetOrders_For_OrderId(string id)
+        [Test]
+        public async Task GetOrders_For_OrderId()
         {
             //Arrange/Act
-            var response = await _client.GetAsync(BaseUrl + $"/{id}");
+            
+            //First get all
+            //TODO : Needs to be removed once set up is done
+            var res = await _client.GetAsync(String.Empty);
+            var re = await res.Content.ReadAsStringAsync();
+            var o = JsonConvert.DeserializeObject<IEnumerable<OrderInformation>>(re);
+
+            //Now get selected
+            var response = await _client.GetAsync(BaseUrl + $"/{o.First().OrderId}");
             var result = await response.Content.ReadAsStringAsync();
             var orders = JsonConvert.DeserializeObject<IEnumerable<OrderInformation>>(result);
 
@@ -65,7 +86,7 @@ namespace SampleService.Api.SpecTests
         public async Task Returns_HttpStatusCode_201_WhenCreatingOrderWith_ValidRequest()
         {
             //Arrange
-            var request = JsonConvert.SerializeObject(new CreateOrderRequest { OrderId = "Id", CustomerId = "Ref" });
+            var request = JsonConvert.SerializeObject(new CreateOrderRequest { CustomerId = "TESTCUSTOMERID" });
 
             //Act
             var response = await _client.PostAsync(BaseUrl, new StringContent(request, Encoding.UTF8, "application/json"));
@@ -80,28 +101,10 @@ namespace SampleService.Api.SpecTests
         
         [TestCase("", Category = "ModelBinding")]
         [TestCase(null, Category = "ModelBinding")]
-        public async Task Return_HttpStatusCode_400_WhenCreatingOrderWith_NullOREmpty_OrderId(string orderId)
+        public async Task Return_HttpStatusCode_400_WhenCreatingOrderWith_NullOREmpty_CustomerId(string customerId)
         {
             //Arrange
-            var request = JsonConvert.SerializeObject(new CreateOrderRequest { OrderId = orderId, CustomerId = "Ref" });
-
-            //Act
-            var response = await _client.PostAsync(BaseUrl, new StringContent(request, Encoding.UTF8, "application/json"));
-            var result = await response.Content.ReadAsStringAsync();
-            var errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(result);
-
-            //Assert
-            Assert.IsNotNull(errorResponse);
-            Assert.That(errorResponse.ErrorCode == ErrorCode.ModelBindingException);
-            Assert.That(response.StatusCode == HttpStatusCode.BadRequest);
-        }
-
-        [TestCase("", Category = "ModelBinding")]
-        [TestCase(null, Category = "ModelBinding")]
-        public async Task Return_HttpStatusCode_400_WhenCreatingOrderWith_NullOREmpty_CustomerId(string customerId )
-        {
-            //Arrange
-            var request = JsonConvert.SerializeObject(new CreateOrderRequest { OrderId = "asd", CustomerId = customerId });
+            var request = JsonConvert.SerializeObject(new CreateOrderRequest { CustomerId = customerId });
 
             //Act
             var response = await _client.PostAsync(BaseUrl, new StringContent(request, Encoding.UTF8, "application/json"));
@@ -123,14 +126,14 @@ namespace SampleService.Api.SpecTests
             mockobj.Setup(os => os.CreateOrder(It.IsAny<CreateOrderRequest>())).ThrowsAsync(new ArgumentNullException());
 
             //Create new Host with Mocks
-            var hostBuilder = new WebHostBuilder().UseStartup<StartUpStub>();
+            var hostBuilder = new WebHostBuilder().UseStartup<StartUpStub>().UseConfiguration(_configuration);
             hostBuilder.ConfigureServices(services =>
             {
                 services.AddSingleton<IOrderService>(mockobj.Object);
             });
             var client = CreateServer(hostBuilder);
 
-            var request = JsonConvert.SerializeObject(new CreateOrderRequest { OrderId = "asd", CustomerId = "asd"});
+            var request = JsonConvert.SerializeObject(new CreateOrderRequest { CustomerId = "asd"});
 
             //Act
             var response = await client.PostAsync(BaseUrl, new StringContent(request, Encoding.UTF8, "application/json"));
