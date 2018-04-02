@@ -34,7 +34,7 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
             }
             catch (HttpStatusCodeException e)
             {
-                response = new ObjectResult(e.Error){ StatusCode = (int)HttpStatusCode.InternalServerError};
+                response = new ObjectResult(e.Error) { StatusCode = (int)e.StatusCode };
             }
 
             return response;
@@ -47,13 +47,11 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
             try
             {
                 var responseTask = await _orderService.GetOrderInformation(id);
-
-                //Content negotiation is implemented by ObjectResult hence using it
                 response = new ObjectResult(responseTask) { StatusCode = (int)HttpStatusCode.OK };
             }
             catch (HttpStatusCodeException e)
             {
-                response = new ObjectResult(e.Error) { StatusCode = (int)HttpStatusCode.InternalServerError };
+                response = new ObjectResult(e.Error) { StatusCode = (int)e.StatusCode };
             }
             return response;
         }
@@ -71,7 +69,7 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
             }
             catch (HttpStatusCodeException e)
             {
-                response = new ObjectResult(e.Error) { StatusCode = (int)HttpStatusCode.InternalServerError };
+                response = new ObjectResult(e.Error) { StatusCode = (int)e.StatusCode };
             }
             return response;
         }
@@ -89,7 +87,7 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
             }
             catch (HttpStatusCodeException e)
             {
-                response = new ObjectResult(e.Error) { StatusCode = (int)HttpStatusCode.InternalServerError };
+                response = new ObjectResult(e.Error) { StatusCode = (int)e.StatusCode };
             }
             return response;
         }
@@ -106,7 +104,7 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
             }
             catch (HttpStatusCodeException e)
             {
-                response = new ObjectResult(e.Error) { StatusCode = (int)HttpStatusCode.InternalServerError };
+                response = new ObjectResult(e.Error) { StatusCode = (int)e.StatusCode };
             }
             return response;
         }

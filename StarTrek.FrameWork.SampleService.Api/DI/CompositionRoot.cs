@@ -28,7 +28,6 @@ namespace StarTrek.FrameWork.SampleService.Api.DI
         public static void RegisterRepository(this IRegistrator registrator)
         {
             registrator.Register<IOrderRepository, OrderRepository>(Reuse.Singleton);
-
         }
     }
 }

@@ -53,6 +53,11 @@ namespace StarTrek.FrameWork.SampleService.Api
 
 
             //USING DRYIOC
+            return ConfigureDi(services);
+        }
+
+        public virtual IServiceProvider ConfigureDi(IServiceCollection services)
+        {
             var container = new Container();
             var newContainer = container.WithDependencyInjectionAdapter(services);
             //For custom configuration DI, 
@@ -60,7 +65,7 @@ namespace StarTrek.FrameWork.SampleService.Api
             //services.AddScoped(typeof(ISqlOptionConfiguration),  sp => sp.GetService<IOptionsSnapshot<SqlOptionConfiguration>>().Value);
             //Using DRYIOC 
             newContainer.RegisterDelegate(typeof(ISqlConfiguration), rs => rs.Resolve<IOptionsSnapshot<SqlConfiguration>>().Value, Reuse.Scoped);
-            
+
             //Rest of the DI
             var provider = newContainer.ConfigureServiceProvider<CompositionRoot>();
 
@@ -79,8 +84,7 @@ namespace StarTrek.FrameWork.SampleService.Api
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
-            //Example Middleware
-            app.UseMiddleware<RequestCultureMiddleware>();
+            //Middleware
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
             //Sets path base

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using StarTrek.FrameWork.CustomerServiceClient;
@@ -21,14 +22,19 @@ namespace StarTrek.FrameWork.SampleService.Core
         }
         public Task<IEnumerable<OrderInformation>> GetOrderInformation(string id)
         {
+            var response = new List<OrderInformation>();
             try
             {
-                throw new NotImplementedException();
+                response.AddRange(new []{new OrderInformation{OrderRef = id}, new OrderInformation()});
+                if(!string.IsNullOrEmpty(id))
+                    response.RemoveAll(o => o.OrderRef != id);
             }
             catch (NotImplementedException e) //catch custom exceptions and relay httpstatuscodeexceptions to controller
             {
                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.NotImplementedException, e.Message));
             }
+
+            return Task.FromResult(response.AsEnumerable());
         }
 
         public Task<OrderInformation> CreateOrder(CreateOrderRequest createOrderRequest)
