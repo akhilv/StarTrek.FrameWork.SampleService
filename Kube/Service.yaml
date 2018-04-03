@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: startreksampleapi-service  
+spec:
+  type: LoadBalancer
+  selector:
+    app: startreksampleservice  
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
