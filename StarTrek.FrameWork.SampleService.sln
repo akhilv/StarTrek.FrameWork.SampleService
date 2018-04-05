@@ -29,13 +29,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{41F97BF6-F32
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{AB3B9622-61A5-4FC4-8CD4-6ABA5195C193}"
 	ProjectSection(SolutionItems) = preProject
-		SQL\SampleOrder.sql = SQL\SampleOrder.sql
+		SQL\TB_SampleOrder.sql = SQL\TB_SampleOrder.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Procs", "Procs", "{342F1974-4DEB-4581-BBCD-2C754BD2792F}"
 	ProjectSection(SolutionItems) = preProject
-		SQL\CreateSampleOrder.sql = SQL\CreateSampleOrder.sql
-		SQL\GetSampleOrder.sql = SQL\GetSampleOrder.sql
+		SQL\SP_CreateSampleOrder.sql = SQL\SP_CreateSampleOrder.sql
+		SQL\SP_GetSampleOrder.sql = SQL\SP_GetSampleOrder.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{4DCF2A11-A037-4686-9C32-C29163DE6818}"
@@ -45,9 +45,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{4DCF2A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", "{6C2A8405-4E61-481B-960C-FA53CFDE3980}"
 	ProjectSection(SolutionItems) = preProject
+		ClusterRoleBinding.yaml = ClusterRoleBinding.yaml
 		Kube\Deployment.yaml = Kube\Deployment.yaml
-		Kube\IngressController.yaml = Kube\IngressController.yaml
+		Kube\Ingress.yaml = Kube\Ingress.yaml
+		Kube\NginxIngressController.yaml = Kube\NginxIngressController.yaml
 		Kube\Service.yaml = Kube\Service.yaml
+		Kube\TraefikAccount.yaml = Kube\TraefikAccount.yaml
+		TraefikIngressController.yaml = TraefikIngressController.yaml
+		Kube\TraefikIngressService.yaml = Kube\TraefikIngressService.yaml
 	EndProjectSection
 EndProject
 Global

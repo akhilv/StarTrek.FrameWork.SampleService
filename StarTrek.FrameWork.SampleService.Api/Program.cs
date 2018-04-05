@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace StarTrek.FrameWork.SampleService.Api
 {
@@ -21,9 +22,16 @@ namespace StarTrek.FrameWork.SampleService.Api
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-            //Default kestrel listens on port 5000    
-            //Enable below if want to run multiple kestrel apps on same IP, port 0 will dynamically bind to a port.
+                //Default kestrel listens on port 5000    
+                //Enable below if want to run multiple kestrel apps on same IP, port 0 will dynamically bind to a port.
                 //.UseUrls("http://*:0")
+                //.ConfigureLogging((hostingContext, logging) =>
+                //{
+                //    logging.ClearProviders();
+                //})
+                .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
+                    .Enrich.FromLogContext()
+                    .WriteTo.Console())
                 .Build();
     }
 }
