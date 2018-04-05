@@ -32,6 +32,7 @@ namespace StarTrek.FrameWork.SampleService.Api
                 .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
                     .Enrich.FromLogContext()
                     .WriteTo.Console())
+                .UseApplicationInsights()
                 .Build();
     }
 }
