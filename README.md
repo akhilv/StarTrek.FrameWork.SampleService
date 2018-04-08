@@ -1,5 +1,11 @@
 # StarTrek.FrameWork.SampleService
-Sample .NET Core Web API app using DRYIOC and SeriLog. 
+Sample .NET Core Web API app using, 
+
+DI : DRYIOC
+
+Logger : SeriLog
+
+Monitoring : Application Insights
 
 Dockerized container based deployment on AKS(Azure Kubernetes Services) cluster. 
 
