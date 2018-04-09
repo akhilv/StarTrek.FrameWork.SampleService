@@ -29,10 +29,25 @@ namespace StarTrek.FrameWork.SampleService.Api
                 //{
                 //    logging.ClearProviders();
                 //})
-                .UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-                    .Enrich.FromLogContext()
-                    .WriteTo.Console())
-                .UseApplicationInsights()
+
+                //https://github.com/serilog/serilog-aspnetcore
+                //https://github.com/serilog/serilog-sinks-console
+                //https://github.com/serilog/serilog-settings-configuration
+                //https://github.com/serilog/serilog/wiki/Enrichment  - Enrichers (can make use for logging and generating TxId i.e. CorrelationId, ThreadId or AnythingElse
+                //https://github.com/serilog/serilog-enrichers-thread
+                .UseSerilog((hostingContext, loggerConfiguration) =>
+                {
+                    loggerConfiguration
+                        .ReadFrom.Configuration(hostingContext.Configuration)
+                        //[{Timestamp: HH:mm: ss} {Level:u3}] {Message:lj}{NewLine}{Exception}
+                        //[{Timestamp: HH:mm: ss} {Level:u3}] {Message:lj} {Properties}{NewLine}{Exception}  - if want just the threadid
+                        .WriteTo.Console(
+                            outputTemplate:
+                            "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] ThreadId:{ThreadId} {Message:lj} {NewLine}{Exception}")
+                        .WriteTo.ApplicationInsightsTraces(hostingContext.Configuration["ApplicationInsights:InstrumentationKey"])
+                        .Enrich.WithThreadId().Enrich.FromLogContext();
+                })
+                //.UseApplicationInsights()
                 .Build();
     }
 }

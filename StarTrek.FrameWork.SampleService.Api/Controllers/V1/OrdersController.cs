@@ -5,7 +5,9 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Serilog.Context;
 using StarTrek.FrameWork.SampleService.Core;
 using StarTrek.FrameWork.SampleService.Models;
 using StarTrek.FrameWork.SampleService.Models.DTO;
@@ -18,10 +20,12 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
     public class OrdersController : Controller
     {
         private readonly IOrderService _orderService;
+        private readonly ILogger<OrdersController> _logger;
 
-        public OrdersController(IOrderService orderService)
+        public OrdersController(IOrderService orderService, ILogger<OrdersController> logger)
         {
             _orderService = orderService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -30,12 +34,14 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
             ObjectResult response;
             try
             {
+                _logger.LogInformation("Get Orders request receieved");
                 var responseTask = await _orderService.GetOrderInformation(String.Empty);
-                response =  new ObjectResult(responseTask) {StatusCode = (int) HttpStatusCode.OK};
+                response = new ObjectResult(responseTask) {StatusCode = (int) HttpStatusCode.OK};
+                _logger.LogError("Get Orders request successfull");
             }
             catch (HttpStatusCodeException e)
             {
-                response = new ObjectResult(e.Error) { StatusCode = (int)e.StatusCode };
+                response = new ObjectResult(e.Error) {StatusCode = (int) e.StatusCode};
             }
 
             return response;
