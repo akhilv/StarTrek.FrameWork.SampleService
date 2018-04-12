@@ -34,14 +34,19 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
             ObjectResult response;
             try
             {
-                _logger.LogInformation("Get Orders request receieved");
-                var responseTask = await _orderService.GetOrderInformation(String.Empty);
-                response = new ObjectResult(responseTask) {StatusCode = (int) HttpStatusCode.OK};
-                _logger.LogError("Get Orders request successfull");
+                using (LogContext.PushProperty("AkhilCustomProperty", "custompropvalue"))
+                {
+
+                    _logger.LogInformation("Get Orders request recieved");
+                    var responseTask = await _orderService.GetOrderInformation(String.Empty);
+                    response = new ObjectResult(responseTask) {StatusCode = (int) HttpStatusCode.OK};
+                    _logger.LogInformation("Get Orders request successfull");
+                }
             }
             catch (HttpStatusCodeException e)
             {
                 response = new ObjectResult(e.Error) {StatusCode = (int) e.StatusCode};
+                _logger.LogError(e, e.Message);
             }
 
             return response;
@@ -59,6 +64,7 @@ namespace StarTrek.FrameWork.SampleService.Api.Controllers.V1
             catch (HttpStatusCodeException e)
             {
                 response = new ObjectResult(e.Error) { StatusCode = (int)e.StatusCode };
+                _logger.LogError(e, e.Message);
             }
             return response;
         }

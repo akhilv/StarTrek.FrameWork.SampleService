@@ -29,9 +29,9 @@ namespace StarTrek.FrameWork.SampleService.Core
             {
                 response = await _orderRepository.GetOrderInformation(id);
             }
-            catch (SqlException e) //catch handled exceptions and relay httpstatuscodeexceptions to controller
+            catch (SqlException sqlException) //catch handled exceptions and relay httpstatuscodeexceptions to controller
             {
-                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.SQLException, e.Message));
+                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, sqlException, new ErrorResponse(ErrorCode.SQLException, sqlException.Message));
             }
             return response;
         }
@@ -44,9 +44,9 @@ namespace StarTrek.FrameWork.SampleService.Core
 
                 return await _orderRepository.CreateOrder(createOrderRequest);
             }
-            catch (SqlException e) //catch handled exceptions and relay httpstatuscodeexceptions to controller
+            catch (SqlException sqlException) //catch handled exceptions and relay httpstatuscodeexceptions to controller
             {
-                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.SQLException, e.Message));
+                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, sqlException, new ErrorResponse(ErrorCode.SQLException, sqlException.Message));
             }
         }
 
@@ -56,9 +56,9 @@ namespace StarTrek.FrameWork.SampleService.Core
             {
                 return await _orderRepository.UpdateOrder(updateOrderRequest);
             }
-            catch (SqlException e) //catch handled exceptions and relay httpstatuscodeexceptions to controller
+            catch (SqlException sqlException) //catch handled exceptions and relay httpstatuscodeexceptions to controller
             {
-                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.SQLException, e.Message));
+                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, sqlException, new ErrorResponse(ErrorCode.SQLException, sqlException.Message));
             }
         }
 
@@ -68,9 +68,9 @@ namespace StarTrek.FrameWork.SampleService.Core
             {
                 return await _orderRepository.DeleteOrder(id);
             }
-            catch (SqlException e) //catch handled exceptions and relay httpstatuscodeexceptions to controller
+            catch (SqlException sqlException) //catch handled exceptions and relay httpstatuscodeexceptions to controller
             {
-                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, new ErrorResponse(ErrorCode.SQLException, e.Message));
+                throw new HttpStatusCodeException(HttpStatusCode.InternalServerError, sqlException, new ErrorResponse(ErrorCode.SQLException, sqlException.Message));
             }
         }
     }

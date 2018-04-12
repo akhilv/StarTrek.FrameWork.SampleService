@@ -19,35 +19,12 @@ namespace StarTrek.FrameWork.SampleService.Models.Exceptions
             Error = new ErrorResponse(ErrorCode.Unspecified, string.Empty);
         }
 
-        public HttpStatusCodeException(string message) : this(HttpStatusCode.InternalServerError, message)
-        {
-
-        }
-
-        public HttpStatusCodeException(string message, Exception ex) : this(HttpStatusCode.InternalServerError, message,
-            ex)
-        {
-
-        }
-
+        
         public HttpStatusCodeException(HttpStatusCode statusCode, ErrorResponse error)
         {
             StatusCode = statusCode;
             Error = error;
         }
-
-        public HttpStatusCodeException(HttpStatusCode statusCode, string message) : base(message)
-        {
-            StatusCode = statusCode;
-            Error = new ErrorResponse(ErrorCode.Unspecified, message);
-        }
-
-        //public HttpStatusCodeException(HttpStatusCode statusCode, string message, CustomException ex) : base(message, ex)
-        //{
-        //    StatusCode = statusCode;
-        //    if (ex != null)
-        //        Error = new ErrorResponse(ex.ErrorCode, message);
-        //}
 
         public HttpStatusCodeException(HttpStatusCode statusCode, string message, Exception ex) : base(message, ex)
         {
@@ -55,10 +32,23 @@ namespace StarTrek.FrameWork.SampleService.Models.Exceptions
             Error = new ErrorResponse(ErrorCode.Unspecified, message);
         }
 
+        public HttpStatusCodeException(HttpStatusCode statusCode, Exception ex, ErrorResponse errorResponse) : base(errorResponse.Message, ex)
+        {
+            StatusCode = statusCode;
+            Error = errorResponse;
+        }
+
+
         protected HttpStatusCodeException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             StatusCode = (HttpStatusCode) info.GetValue("StatusCode", typeof(HttpStatusCode));
             Error = (ErrorResponse) info.GetValue("Error", typeof(ErrorResponse));
+        }
+
+        public HttpStatusCodeException(string message, Exception ex) : this(HttpStatusCode.InternalServerError, message,
+            ex)
+        {
+
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)

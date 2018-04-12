@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using StarTrek.FrameWork.SampleService.Models;
 using StarTrek.FrameWork.SampleService.Models.Exceptions;
@@ -15,10 +16,12 @@ namespace StarTrek.FrameWork.SampleService.Api.MiddleWare
     {
         private const HttpStatusCode DefaultErrorStatusCode = HttpStatusCode.InternalServerError;
         private readonly RequestDelegate _next;
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
 
-        public ErrorHandlingMiddleware(RequestDelegate next)
+        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
         {
             this._next = next;
+            _logger = logger;
         }
 
         //Put DIs in method if want SCOPED(per rq) as ctr of middleware is invoked once
@@ -30,11 +33,12 @@ namespace StarTrek.FrameWork.SampleService.Api.MiddleWare
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, ex.Message);
                 await HandleExceptionAsync(context, ex);
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception e)
+        private Task HandleExceptionAsync(HttpContext context, Exception e)
         {
             var result = new ErrorResponse(ErrorCode.UnhandledException, e.Message);
             var code = DefaultErrorStatusCode;

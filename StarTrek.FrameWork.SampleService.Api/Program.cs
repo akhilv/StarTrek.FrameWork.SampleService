@@ -43,7 +43,7 @@ namespace StarTrek.FrameWork.SampleService.Api
                         //[{Timestamp: HH:mm: ss} {Level:u3}] {Message:lj} {Properties}{NewLine}{Exception}  - if want just the threadid
                         .WriteTo.Console(
                             outputTemplate:
-                            "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] ThreadId:{ThreadId} {Message:lj} {NewLine}{Exception}")
+                            "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj} {NewLine}{Exception}")
                         .WriteTo.ApplicationInsightsTraces(hostingContext.Configuration["ApplicationInsights:InstrumentationKey"])
                         .Enrich.WithThreadId().Enrich.FromLogContext();
                 })

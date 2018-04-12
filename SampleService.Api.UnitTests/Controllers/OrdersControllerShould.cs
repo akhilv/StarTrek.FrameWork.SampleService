@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using StarTrek.FrameWork.SampleService.Api.Controllers.V1;
@@ -19,11 +20,13 @@ namespace SampleService.Api.UnitTests.Controllers
     public class OrdersControllerShould
     {
         private Mock<IOrderService> _orderServiceMock;
+        private Mock<ILogger<OrdersController>> _loggerMock;
 
         [SetUp]
         public void SetUp()
         {
             _orderServiceMock = new Mock<IOrderService>();
+            _loggerMock = new Mock<ILogger<OrdersController>>();
         }
 
         [TestCase("TestId")]
@@ -36,7 +39,7 @@ namespace SampleService.Api.UnitTests.Controllers
                 new OrderInformation {OrderId = 1, OrderRef = "ORDERREF", CreatedDateTime = resDateTime}
             };
             _orderServiceMock.Setup(os => os.GetOrderInformation(id)).ReturnsAsync(expectedResponse);
-            var sut = new OrdersController(_orderServiceMock.Object);
+            var sut = new OrdersController(_orderServiceMock.Object, _loggerMock.Object);
 
             //Act
             var result =  await sut.GetOrdersById(id);
@@ -63,7 +66,7 @@ namespace SampleService.Api.UnitTests.Controllers
                 new OrderInformation {OrderId = 1, OrderRef = "ORDERREF", CreatedDateTime = resDateTime};
 
             _orderServiceMock.Setup(os => os.CreateOrder(rq)).ReturnsAsync(expectedResponse);
-           var sut = new OrdersController(_orderServiceMock.Object);
+           var sut = new OrdersController(_orderServiceMock.Object, _loggerMock.Object);
 
             //Act
             var result = await sut.CreateOrder(rq);
@@ -90,8 +93,8 @@ namespace SampleService.Api.UnitTests.Controllers
             var expectedResponse = new ErrorResponse(ErrorCode.ModelBindingException, "Bad Request");
 
             _orderServiceMock.Setup(os => os.CreateOrder(rq)).ThrowsAsync(new HttpStatusCodeException(HttpStatusCode.BadRequest, expectedResponse));
-            var sut = new OrdersController(_orderServiceMock.Object);
-            
+            var sut = new OrdersController(_orderServiceMock.Object, _loggerMock.Object);
+
             //Act
             var result = await sut.CreateOrder(rq);
 
