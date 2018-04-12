@@ -17,6 +17,7 @@ using StarTrek.FrameWork.SampleService.Api.DI;
 using StarTrek.FrameWork.SampleService.Api.Filters;
 using StarTrek.FrameWork.SampleService.Api.MiddleWare;
 using StarTrek.FrameWork.SampleService.DataAccess;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace StarTrek.FrameWork.SampleService.Api
 {
@@ -40,6 +41,11 @@ namespace StarTrek.FrameWork.SampleService.Api
             //Configure the custom configurations
             services.Configure<SqlConfiguration>(_configuration.GetSection("SQLConfiguration"));
 
+            //Swagger
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My Startrek API", Version = "v1" });
+            });
 
             //USING DRYIOC
             return ConfigureDi(services);
@@ -89,6 +95,18 @@ namespace StarTrek.FrameWork.SampleService.Api
             {
                 //app.UseDeveloperExceptionPage();
             }
+
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Startrek API V1");
+            });
+
+
 
             //Configure default route
             app.UseMvc(routes => routes.MapRoute(
