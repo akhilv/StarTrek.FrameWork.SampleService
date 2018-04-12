@@ -44,7 +44,7 @@ namespace StarTrek.FrameWork.SampleService.Api
             //Swagger
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "My Startrek API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "Startrek.Framework.SampleService API", Version = "v1" });
             });
 
             //USING DRYIOC
@@ -103,7 +103,7 @@ namespace StarTrek.FrameWork.SampleService.Api
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Startrek API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Startrek.Framework.SampleService API V1");
             });
 
 

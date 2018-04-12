@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: startreksampleservice
-        image: akhiltest.azurecr.io/starterksampleservice:2.0
+        image: akhiltest.azurecr.io/starterksampleservice:3.0
         ports:
         - containerPort: 80
