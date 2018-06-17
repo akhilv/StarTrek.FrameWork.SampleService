@@ -1,0 +1,15 @@
+//Publish an app at "testbin"
+dotnet publish .\StarTrek.FrameWork.SampleService.Api.csproj -o ../testbin
+
+//Build an image
+docker build -t startreksampleservice:1.0 .
+
+//Log into ACR
+docker login test.azurecr.io -u {userid} -p {mypwd}
+
+//Tag for ACR
+docker tag startreksampleservice:1.0 test.azurecr.io/starterksampleservice:1.0
+
+//Push to ACR
+docker push test.azurecr.io/starterksampleservice:1.0
+
