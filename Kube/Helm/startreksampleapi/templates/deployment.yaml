@@ -19,7 +19,9 @@ spec:
         app: {{ template "StarTrekSampleService.name" . }}
         release: {{ .Release.Name }}
     spec:
-      containers:
+      imagePullSecrets:
+        - name: {{ .Values.image.pullSecret }}
+      containers:      
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -29,11 +31,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /sample-api/v1/orders
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /sample-api/v1/orders
               port: http
           resources:
 {{ toYaml .Values.resources | indent 12 }}
