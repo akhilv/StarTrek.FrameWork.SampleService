@@ -51,7 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", 
 		Kube\NginxIngressController.yaml = Kube\NginxIngressController.yaml
 		Kube\Service.yaml = Kube\Service.yaml
 		Kube\TraefikAccount.yaml = Kube\TraefikAccount.yaml
-		TraefikIngressController.yaml = TraefikIngressController.yaml
+		Kube\TraefikIngressController.yaml = Kube\TraefikIngressController.yaml
 		Kube\TraefikIngressService.yaml = Kube\TraefikIngressService.yaml
 	EndProjectSection
 EndProject
