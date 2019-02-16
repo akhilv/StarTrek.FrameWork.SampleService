@@ -13,3 +13,4 @@ docker tag startreksampleservice:1.0 test.azurecr.io/starterksampleservice:1.0
 //Push to ACR
 docker push test.azurecr.io/starterksampleservice:1.0
 
+//this is master change
