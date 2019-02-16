@@ -16,3 +16,5 @@ docker push test.azurecr.io/starterksampleservice:1.0
 //this is master change
 //test changes to be reverted back
 
+//test another change
+
