@@ -14,3 +14,5 @@ docker tag startreksampleservice:1.0 test.azurecr.io/starterksampleservice:1.0
 docker push test.azurecr.io/starterksampleservice:1.0
 
 //this is master change
+//test changes to be reverted back
+
